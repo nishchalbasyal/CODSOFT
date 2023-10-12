@@ -1,0 +1,29 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block content %}
+
+<div class="add-blog">
+  
+   <div class="card">
+     <h1>Create a Post</h1>
+       <form action="" method="post" enctype="multipart/form-data">
+         <p>          {{form.non_field_errors}}         </p>
+           {% csrf_token %}
+           {{form.media}}
+
+ 
+              {{form.as_p | safe}}
+ 
+            <button type="submit">Submit</button>
+        </form>
+   </div>
+
+</div>
+
+{% endblock  %}
+
+
+
+
+  

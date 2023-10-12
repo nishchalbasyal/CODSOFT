@@ -1,0 +1,31 @@
+{% extends "base.html" %}  {% load static %}
+
+{% block content %}
+
+<section class="home">
+  <div class="searchform">
+    {% include "searchform.html" %}
+    
+  </div>
+{% include "hero.html"  with username=username%}
+  <div class="blog-content">
+    <div class="blog-archive">
+      <span class="header">
+        <h1 class="latest-post">Latest Post</h1>
+        <hr />
+      </span>
+
+      
+    
+       {% for post in allPost %}
+
+          {% include "post_card.html" with post=post %}
+
+      {% endfor %}  
+    </div>
+
+ 
+  </div>
+</section>
+
+{% endblock %}

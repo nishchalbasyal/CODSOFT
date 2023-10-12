@@ -1,0 +1,32 @@
+{% extends "base.html" %}  {% load static %}
+
+{% block content %}
+
+
+<div class="search-page">
+
+  {% if Posts %}
+  <div class="search-results">
+    <span class="heading">
+      <h1>Search Results: </h1>
+    </span>
+  
+  {% for  post in  Posts %}
+
+    {% include "post_card.html" with  post=post %}
+    
+  </div>
+  
+  
+  {% endfor %}  
+  {% else %}
+  <div class="not-found">
+      <h2> Sorry !! Not Found </h2>
+  </div>
+  {% endif %}
+
+</div>
+
+
+
+{% endblock %}

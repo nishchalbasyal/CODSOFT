@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block  content%}
+
+
+<div class="auth-page">
+    <div class="errors">
+        <p><strong>Found Following Errors: </strong></p>
+
+    <ol>
+        <li>Erro 1</li>
+        <li>Erro 2</li>
+        <li>Erro 3</li>
+    </ol>
+    </div>
+    <form action="/register" class="login-form register-form" method="post" enctype="multipart/form-data">
+        <h1>Create Your Account</h1>
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" placeholder="john@email.com" name="email" id="eemail">
+          <span class="register-error register-email-error">Error</span>
+        </div>
+        <div class="form-group">
+          <label for="fullname">Full Name:</label>
+          <input type="text" placeholder="John Doe.." id="ffullname" name="fullname">
+          <span class="register-error register-fullname-error">Error</span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" placeholder="******" id="ppassword" name="password">
+          <span class="register-error register-password-error">Error</span>
+        </div>
+        <div class="form-file-group">
+          <label for="file">Profile Picture</label>
+          <input type="file" name="file" id="ffile">
+          <span class="register-error register-file-error"></span>
+        </div>
+
+         <button type="submit" id="sign-up">Signup</button>
+  
+      
+        <div class="form-extra">
+          
+            <span><p>Already a user ? <strong> <a href="{% url "home" %}"> Login Here</a></strong></p></span>
+         </div>
+    
+    </form>
+
+
+
+
+</div>
+
+
+{% endblock  %}

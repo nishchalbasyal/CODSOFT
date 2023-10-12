@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+ 
+{% block  content%}
+ <div class="single-post">
+
+  <div class="content-section">
+
+ 
+    <article>
+        <div class="article-header">
+            <h1 class="title">{{post.title}}</h1>
+
+            <hr />
+            
+            <div class="article-editorsInfo">
+                
+                <span class="author"><p>Author: <strong> <a href="{% url "author.url" post.user.username %}" >
+                    {% if  post.user.fullname%}
+                    {{post.user.fullname}}
+                    {% else %}
+                    
+                    {{post.user.username}}
+                    {% endif %}
+
+                </a></strong></p></span>  
+                
+                <span class="date"><p>&nbsp;| Posted : <strong>{{post.created_at|date:"M j"}}</strong>  | {{totalcomments}} comments</p></span>
+                
+                
+            </div>
+
+            <hr />
+          
+            {% if post.featureImage  %}
+              <div class="feature-Image">
+
+                  <img src="https://res.cloudinary.com/dy8cpoo0r/image/upload/v1696055945/{{post.featureImage}}.png" alt="{{ post.title }}">
+                </div>
+            
+            {% endif %}
+            <hr />
+         
+
+ 
+        </div>
+        <div class="content">
+            <p>
+                {{post.description | safe }}
+             </p>
+
+           
+         
+
+    
+        </div>
+
+        <hr/>
+        
+    </article>
+
+ 
+     {% include "comments.html" with allComments=allComments username=username fullname=fullname allReplies=allReplies%}
+   
+      
+    </section>
+
+</div>
+
+
+
+ 
+
+
+
+ </div>
+
+{% endblock  %}

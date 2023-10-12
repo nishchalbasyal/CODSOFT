@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+{% load static %} 
+ 
+ 
+{% block content %}
+<div class="auth-page"> 
+ 
+    <form  class="login-form llogin-form"  method="post">
+        <h1>Login</h1>
+        {% csrf_token %}
+        <span class="error-list"> 
+          {{form.non_field_errors}}
+
+         </span>
+
+        <div class="form-group">
+          <label for="email">Username:</label>
+          {% comment %} <input type="email" placeholder="john@email.com" name="email" id="email"> {% endcomment %}
+          {{ form.username}}
+
+          <span class="error error-email"> 
+            
+            {{ form.username.errors }}
+          </span>
+
+        </div>
+ 
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          {% comment %} <input type="password" placeholder="******" id="password" name="password"> {% endcomment %}
+          {{ form.password }}
+          <span class="error error-password">
+            {{ form.password.errors }}
+
+          </span>
+        </div>
+       
+
+             
+        <button type="submit" id="login-btn">Login</button>
+  
+        <div class="form-extra">
+            <span><p>Are you new user ? <strong> <a href="{% url "register" %}">Create Your Account</a></strong></p></span>
+            <span><p> <a href="/">Forget Your Password ? </a></p></span>
+        </div>
+    
+        
+      </form>
+
+</div>
+{% endblock content%}

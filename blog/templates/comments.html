@@ -1,0 +1,95 @@
+ {% load static %}
+ <div class="comment-section">
+    <div class="write-comments">
+        <h1>Comments: </h1>
+        {% if  username %}
+        <form action="/{{post.slug}}/comment"  method="post">
+            {% csrf_token %}
+    
+            <span>
+                You are Writing as <strong> <a href="">
+                    {% if fullname %}
+                      {{fullname}}
+                      {% else %}
+                      {{username}}
+                    {% endif %}
+                </a></strong>
+            </span>
+    
+            <div class="form-group">
+                 <textarea name="comment" id="comment" cols="30" rows="10"   ></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Comment</button>
+             </div>
+    
+        </form>
+
+        {% else %}
+        
+        <div class="form-group">
+            <button type="button" class="login-reply">Login to comment</button>
+         </div>
+        
+        {% endif %}
+
+        
+    </div>
+
+    <div class="display-comments">
+        {% for comment in  allComments %}
+        
+  
+        <div class="comment-card">
+            <span class="author-name">
+                <h4>{{comment.user.username}}</h4>
+            </span>
+            <p class="comment">{{comment.comment}}</p>
+
+
+          
+            {% if username %}
+            <form    class="reply-form  reply-form-{{comment.id}} " data-comment-id="{{comment.id}}" >
+
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" id="csrfToken">
+              
+                <div class="form-group">
+                    <textarea name="comment" id="comment" class="reply-comment" cols="30" rows="10" onchange="handleCommentChange(this.value)"></textarea>
+               </div>
+               <div class="form-group">
+                   <button type="button" class="final-reply" >Reply</button>
+                </div>
+            </form>
+ 
+            <span class="btn">
+                <button class="ready-reply" name="reply">Reply</button>
+            </span>
+            
+            {% else %}
+            <span class="btn">
+                <button class="login-reply" name="reply">Login to reply</button>
+            </span>
+
+           {% endif %}
+
+
+            {% for reply in comment.reply_set.all%}
+
+            <div class="reply-msg">
+                <div class="replay-wrapper">
+
+                    <span class="author-name">
+                        <h4>{{reply.user.username}}</h4>
+                    </span>
+                    <p class="comment">{{reply.reply}}</p>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        {% endfor %}
+    </div>
+    
+</div>
+

@@ -1,0 +1,130 @@
+{% extends "base.html" %}  {% load static %}
+{% block  content %}
+ 
+  <div class="author-section">
+      <div class="container">
+          <div class="right-section">
+            <div class="header">
+                <div class="left">
+                    <h1>{{author.fullname}}</h1>
+                     {% if  author.bio%}
+                     <div class="bio-section">
+                          <p>{{author.bio}}</p>
+                        </div>
+                     
+                     {% endif %}
+                     
+
+                      <div class="mobile-section">
+                        <span class="username">
+                         @{{author.username}}
+                        </span>
+                      
+                        <span class="Level level-{{author.authorLevel}}-author">
+                           {{author.authorLevel}} Level Author
+                        </span>
+                        <div class="follower-section">
+                          <span class="following">{{author.total_following}} Following</span>  <span class="followers">{{author.total_followers}} Followers</span>
+                        </div>
+                        <div class="author-meta">
+                           <span><p>{{author.totalpost}} : <strong>Posts</strong>,  {{author.totalcomment}} <strong>Comments</strong>,  {{author.totalreply}} <strong>Replies</strong></p></span>
+                        </div>
+                      </div>
+
+                </div>
+
+            {% if user.username %}
+                {% if user.username == author.username %}
+                    <button>Edit</button>
+                {% else %}
+                    <button id="followBtn" onclick="handleFollowhandler('{{ user.username }}', '{{ author.username }}')">
+                        {% if isAlreadyFollow %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </button>
+                {% endif %}
+            {% else %}
+                <button onclick="login_func()">Login</button>
+            {% endif %}
+             </div>
+
+            <div class="all-posts">
+
+              {% if user.username == author.username %}
+              {% for  post in  posts%}
+                  
+                 {% include "post_card.html" with post=post isAuth=True %}
+              
+              {% endfor %}
+              
+              {% else %}
+              {% for  post in  posts%}
+                  
+              {% include "post_card.html" with post=post isAuth=False %}
+           
+             {% endfor %}
+              {% endif %}
+            </div>
+        </div>
+        <div class="left-section">
+                   {% if  author.profile_picture%}
+                   <div class="image">
+                    <img src="https://res.cloudinary.com/dy8cpoo0r/image/upload/v1696246485/{{author.profile_picture}}.png" alt="authorname">
+                  </div>
+                   
+                   {% endif %}
+                   <span class="author-name">{{author.fullname}}</span>
+                   <span class="username">
+                    @{{author.username}}
+                   </span>
+                   <span class="Level level-{{author.authorLevel}}-author">
+                     {{author.authorLevel}} Level Author
+                   </span>
+                   <div class="follower-section">
+                     <span class="following">{{author.total_following}} Following</span>  <span class="followers">{{author.total_followers}} Followers</span>
+                   </div>
+                   <div class="author-meta">
+                      <span><p>{{author.totalpost}} : <strong>Posts</strong>,  {{author.totalcomment}} <strong>Comments</strong>,  {{author.totalreply}} <strong>Replies</strong></p></span>
+                   </div>
+
+
+                   <div class="get-followers">
+                     <p class="">Following</p>
+                      <ul>
+                        {% for user in page %}
+                        
+                        <li>
+                          {% if  user.following.profile_picture%}
+
+                          <span class="right-image">
+                              <img src="https://res.cloudinary.com/dy8cpoo0r/image/upload/v1696246485/{{user.following.profile_picture}}.png" alt="{{user.following.fullname}}">
+                          </span>
+                          
+                          {% endif %}
+                            <p><a href="/author/{{user.following.username}}">{{user.following.fullname}}</a></p>
+                        </li>
+                        
+                        {% endfor %}
+
+                        {% if page.has_previous %}
+
+                         <a href="?page={{ page.previous_page_number }}" class="btn-link">Back</a>
+                    {% endif %}
+
+                        {% if page.has_next %}
+                        <a href="?page={{ page.next_page_number }}"  class="btn-link">See More</a>
+                         {% endif %}
+             
+                      </ul>
+                   </div>
+      
+      
+            </div>
+    </div>
+  </div>
+
+
+
+{% endblock  %}

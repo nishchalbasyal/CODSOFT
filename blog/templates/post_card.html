@@ -1,0 +1,41 @@
+ <div class="blog-card">
+  {% if  post.featureImage%}
+  
+  <div class="left-img-section">
+    <img src="https://res.cloudinary.com/dy8cpoo0r/image/upload/v1696055945/{{post.featureImage}}.png" alt=""
+    class="card-img-left" onClick="single_post_func('{{post.slug}}')">
+  </div>
+  {% endif %}
+  <div class="right-content-section">
+    <h1 class="blog-title" onClick="single_post_func('{{post.slug}}')">{{post.title}}</h1>
+    <span><p>
+       Last Updated : {{post.updated_at | date:"M j"}} By <span>
+        <a href="{% url "author.url" post.user.username  %}">
+
+          {% if  post.user.fullname%}
+          {{post.user.fullname}}
+          {% else %}
+          
+          {{post.user.username}}
+          {% endif %}
+        </a> 
+      </span>
+    </p>
+  </span>
+     <p class="blog-meta-description">
+       {{post.summary | safe}}
+    </p>
+    <span class="btn">
+
+      {% if isAuth %}
+      <button class="btn-post" onClick="single_post_edit_func('{{post.slug}}')">Edit</button>
+      <button class="btn-post" onClick="single_post_delete_func('{{post.slug}}')">Delete</button>
+
+      {% else %}
+
+      <button class="btn-post" onClick="single_post_func('{{post.slug}}')">Read More</button>
+
+      {% endif %}
+    </span>
+  </div>
+</div>

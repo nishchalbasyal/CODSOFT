@@ -1,0 +1,49 @@
+{% load static %}
+
+<div class="hero">
+    <div class="left-section">
+      <span class="image-round">
+        {% if  username and profile_picture%}
+
+        <img src="https://res.cloudinary.com/dy8cpoo0r/image/upload/v1696246485/{{profile_picture}}.png" alt="{{username}}"/>
+        {% else %}
+        <img src="{% static "assets/images/Hello.png" %}" alt="welcome.image"/>
+        
+        {% endif %}
+      </span>
+    </div>
+
+    <div class="right-section">
+      <h2>
+      {% if user.is_authenticated %}
+
+          {% if fullname %}
+          
+          Welcome!! {{fullname}}
+          
+          {% else %}
+          Welcome!! {{username}}
+          
+          {% endif %}
+         
+       
+          
+      {% else %}
+           Welcome !!
+      {% endif %}
+      </h2>
+
+      <hr />
+      <p>
+        Lorem ipsum dolor sit amet consectetur nautem tempore porro eligendi
+        veniam tenetur reiciendis rerum doloremque, quos animi nemo voluptates!
+      </p>
+      {% if username %}
+      <button onClick="write_func(true)">Write Post</button>
+
+      {% else %}
+      
+      <button onClick="login_func(true)">Explore</button>
+      {% endif %}
+    </div>
+  </div>
