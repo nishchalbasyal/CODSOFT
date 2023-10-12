@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import cloudinary
-import environ
-
+from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,17 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SESSION_COOKIE_AGE = 3600 * 24 * 30
 
-env = environ.Env()
-environ.Env.read_env()
+ 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 
 
 cloudinary.config( 
-  cloud_name = "dy8cpoo0r", 
-  api_key = "471922696947476", 
-  api_secret = "SjrxSsA1s0SvCZjUJcapZN8Obeg" 
+  cloud_name =config('CLOUD_NAME'),
+  api_key = config('CLOUD_API_KEY'), 
+  api_secret = config('CLOUD_API_SECRETS'),
 )
 
 
@@ -43,7 +41,7 @@ cloudinary.config(
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--qndeaqr((v)9o)ruch%-^n9ic_$o*d@5_=p&*(pv!k7_jn=vu'
+SECRET_KEY =  config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,9 +72,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
  
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dy8cpoo0r',
-    'API_KEY': '471922696947476',
-    'API_SECRET': 'SjrxSsA1s0SvCZjUJcapZN8Obeg',
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY':  config('CLOUD_API_KEY'),
+    'API_SECRET': config('CLOUD_API_SECRETS'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -105,12 +103,10 @@ MIDDLEWARE = [
 
 AUTH_USER_MODEL = "blog.CustomBlogUser"
 
-LOGIN_REDIRECT_URL  = "/"
-LOGOUT_REDIRECT_URL  = "/"
-LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL  = config('LOGIN_REDIRECT_URL')
+LOGOUT_REDIRECT_URL  = config('LOGOUT_REDIRECT_URL')
+LOGIN_URL = config('LOGIN_URL')
 
-
-SECRET_KEY = 'SS65UGJIT3UeC02mTjXpNL2meyfkr6UQ'
 
 ROOT_URLCONF = 'blogging_platform.urls'
 
@@ -145,11 +141,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bloggingsite',  # Replace with your database name
-        'USER': 'root',               # Default MySQL user in XAMPP
-        'PASSWORD': '',               # Leave empty if no password set
-        'HOST': 'localhost',          # MySQL server host (localhost)
-        'PORT': '3306',               # Default MySQL port
+        'NAME': config('DB_NAME'),  # Replace with your database name
+         'USER': config('DB_USER'),               # Default MySQL user in XAMPP
+        'PASSWORD': config('DB_PASSWORD'),               # Leave empty if no password set
+        'HOST': config('DB_HOST'),          # MySQL server host (localhost)
+        'PORT': config('DB_PORT'),              # Default MySQL port
     }
 }
 
