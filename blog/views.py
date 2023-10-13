@@ -102,15 +102,17 @@ def register(request):
         fullname = request.POST.get("fullname")
         password = request.POST.get("password")
         profile_picture = request.FILES.get("file")
+        username = "".join(fullname.split(" ")).lower()
 
   
-        if(email == '' or fullname == '' or password == ''  or profile_picture == ''):
+        if(email == '' or username== '' or fullname == '' or password == ''):
             return HttpResponseRedirect("/register")
         else:
             new_user = CustomBlogUser.objects.create_user(
+                username=username,
                 email=email,
                 fullname=fullname,
-                password=make_password(password),
+                password=password,
                 profile_picture=profile_picture
             )
             if new_user:

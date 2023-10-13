@@ -15,12 +15,12 @@ import uuid
 
 class CustomUserManager(BaseUserManager):
 
-     def create_user(self, email,password, *args,**extra_fields):
+     def create_user(self,username, email,password, *args,**extra_fields):
           
           if not email:
                raise ValueError("Email must be Set")
           email = self.normalize_email(email)
-          user = self.models(email=email,*args,**extra_fields)
+          user = self.models(username=username,email=email,*args,**extra_fields)
           user.set_password(password)
           user.save()
           return user
@@ -64,7 +64,7 @@ class CustomBlogUser(AbstractUser):
      
      def save(self,*args, **kwargs):
           if not self.username:
-               to_assaign = (self.first_name+self.last_name).lower()
+               to_assaign = "".join(self.fullname.split(" ")).lower()
 
                if CustomBlogUser.objects.filter(username=to_assaign).exists():
 
